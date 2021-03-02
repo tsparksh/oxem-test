@@ -1,0 +1,62 @@
+version: '3.5'
+services:
+
+  #PHP Service
+  app:
+    build:
+      context: ./
+      dockerfile: .Dockerfile
+    container_name: oxem-app
+    restart: unless-stopped
+    tty: true
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+      - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - oxem-test-network
+
+  #Nginx Service
+  webserver:
+    image: nginx:alpine
+    container_name: oxem-webserver
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "1338:80"
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d
+    networks:
+      - oxem-test-network
+
+  #MySQL Service
+  db:
+    image: mysql:5.7.24
+    container_name: oxem-db
+    restart: unless-stopped
+    tty: true
+    environment:
+      MYSQL_DATABASE: laravel
+      MYSQL_ROOT_PASSWORD: root
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - dbdata:/var/lib/mysql/
+      - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
+    networks:
+      - oxem-test-network
+
+#Docker Networks
+networks:
+  oxem-test-network:
+    driver: bridge
+    name: oxem_test_network
+
+#Volumes
+volumes:
+  dbdata:
+    driver: local
