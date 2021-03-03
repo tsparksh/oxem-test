@@ -28,7 +28,7 @@ class CategoryController extends Controller
     public function store(CreateCategoryRequest $request)
     {
         $category = Category::create($request->validated());
-        return ['success' => true, "payload" => $category];
+        return response()->json(['success' => true, "payload" => $category], 201);
     }
 
 
@@ -42,7 +42,7 @@ class CategoryController extends Controller
     public function update(UpdateCategoryRequest $request, $id)
     {
         $category = Category::findOrFail($id)->update($request->validated());
-        return ['success' => true, "payload" => $category];
+        return response()->json(['success' => true, "payload" => $category], 200);
     }
 
     /**
@@ -54,7 +54,7 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         Category::delete($id);
-        return ['success' => true, "payload" => []];
+        return response()->json(['success' => true, "payload" => []], 200);
     }
 
     /**

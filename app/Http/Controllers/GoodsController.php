@@ -39,12 +39,12 @@ class GoodsController extends Controller
 
             $goods = Goods::create($request->validated());
             $goods->categories()->attach($request->categories);
-            return ['success' => true, "payload" => $goods->load('categories:id,name')];
+            return response()->json(['success' => true, "payload" => $goods->load('categories:id,name')], 201);
 
         } catch (QueryException $exception) {
 
             // Получаем детали ошибки через `errorInfo`:
-            return ['success' => false, "error" => $exception->errorInfo];
+            return response()->json(['success' => false, "error" => $exception->errorInfo], 500);
         }
     }
 
@@ -68,6 +68,6 @@ class GoodsController extends Controller
     public function destroy($id)
     {
         Goods::delete($id);
-        return ['success' => true, "payload" => []];
+        return response()->json(['success' => true, "payload" => []], 200);
     }
 }

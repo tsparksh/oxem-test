@@ -129,7 +129,7 @@ class Parse extends Command
      * Функция для парсинга файла.
      *
      * @param string $filename
-     * @param string $callback Используем string, а не callable, потому что PHP не может в callable с аргументами
+     * @param string $callback
      * @return bool
      */
     protected function parseFile(string $filename, string $callback): bool
