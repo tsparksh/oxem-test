@@ -15,6 +15,13 @@ class CreateGoodsTable extends Migration
     {
         Schema::create('goods', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->text('description')->nullable();
+
+            // Цена указывается в копейках, чтобы избежать неявных округлений
+            $table->integer('price');
+            $table->integer('quantity');
+            $table->integer('external_id');
             $table->timestamps();
         });
     }

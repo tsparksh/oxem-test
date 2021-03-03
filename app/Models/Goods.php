@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Goods extends Model
 {
     use HasFactory;
+
+    protected $guarded = ['id'];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class);
+    }
 }

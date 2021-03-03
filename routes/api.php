@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\GoodsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::apiResource('goods', GoodsController::class)->except('update');
+
+Route::get('categories/{id}/goods', [CategoryController::class, 'goods']);
+Route::apiResource('categories', CategoryController::class)->except('show');
