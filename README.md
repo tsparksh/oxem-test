@@ -10,4 +10,7 @@
 3. `php artisan db:seed`
 4. `php artisan key:generate`
 
+##### Parsing jsons
+Inside an app container: `php artisan parse:files`
+
 ##### Access via http://127.0.0.1:1338
